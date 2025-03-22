@@ -40,7 +40,7 @@ def get_time_seconds_if_exists(driver, by, path):
             comps = hms.split(':')
             if len(comps) == 3:
                 try:
-                    return = int(comps[0]) * 60 * 60 + int(comps[1]) * 60 + int(comps[2])
+                    return int(comps[0]) * 60 * 60 + int(comps[1]) * 60 + int(comps[2])
                 except Exception:
                     pass
     return None
