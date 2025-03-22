@@ -117,7 +117,7 @@ class WebDriver:
             bid_btn = sel.get_if_visible(driver, By.ID, 'addAuctionBidButton')
             if bid_btn != None:
                 # Making a bid
-                # bid_button.click()
+                bid_button.click()
                 time.sleep(2)
 
                 # Check for error
@@ -140,7 +140,7 @@ class WebDriver:
                     time_left = sel.get_time_seconds_if_exists(driver, By.XPATH, lot.time_left_xpath)
                     my_bid = sel.get_bid_if_exists(driver, By.XPATH, lot.my_bid_xpath)
                     best_bid = sel.get_bid_if_exists(driver, By.XPATH, lot.best_bid_xpath)
-                    log.info(str(time_left) + '  ' + str(my_bid) + '  ' + str(best_bid))
+                    # log.info(str(time_left) + '  ' + str(my_bid) + '  ' + str(best_bid))
 
                     if time_left != None and my_bid != None and best_bid != None and time_left < lot.seconds_left_min and my_bid < best_bid:
                         open_bid_btn = sel.get_if_visible(driver, By.XPATH, lot.open_bid_btn_xpath)
