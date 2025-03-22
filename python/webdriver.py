@@ -132,7 +132,21 @@ class WebDriver:
                     if close_bid_btn != None:
                         close_bid_btn.click()
                         time.sleep(1)
+            else:
+                for lot in data.lots:
+                    if sel.get_if_visible(driver, By.ID, 'addAuctionBidButton') != None:
+                        break
 
+                    time_left = sel.get_time_seconds_if_exists(driver, By.XPATH, lot.time_left_xpath)
+                    my_bid = sel.get_bid_if_exists(driver, By.XPATH, lot.my_bid_xpath)
+                    best_bid = sel.get_bid_if_exists(driver, By.XPATH, lot.best_bid_xpath)
+                    log.info(str(time_left) + '  ' + str(my_bid) + '  ' + str(best_bid))
+
+                    if time_left != None and my_bid != None and best_bid != None and time_left < lot.seconds_left_min and my_bid < best_bid:
+                        open_bid_btn = sel.get_if_visible(driver, By.XPATH, lot.open_bid_btn_xpath)
+                        if open_bid_btn != None:
+                            open_bid_btn.click()
+                            time.sleep(2)
         else:
             # TODO: handle login
             pass
