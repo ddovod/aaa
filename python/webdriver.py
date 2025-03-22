@@ -117,7 +117,7 @@ class WebDriver:
             bid_btn = sel.get_if_visible(driver, By.ID, 'addAuctionBidButton')
             if bid_btn != None:
                 # Making a bid
-                bid_button.click()
+                bid_btn.click()
                 time.sleep(2)
 
                 # Check for error
