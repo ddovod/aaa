@@ -75,7 +75,7 @@ class Gui:
         self._should_close = glfw.window_should_close(self._window)
 
     def draw_gui(self):
-        data = Context().data()
+        data = Context().data
 
         imgui.text('Settings')
         show, _ = imgui.collapsing_header('Trade config')
@@ -99,8 +99,14 @@ class Gui:
             if imgui.button('Add new lot'):
                 data.add_new_lot()
             if imgui.button('Save'):
-                Context().config().save()
+                Context().config.save()
             imgui.separator()
+
+        if imgui.button('START'):
+            Context().webdriver.start()
+        imgui.same_line()
+        if imgui.button('STOP'):
+            Context().webdriver.stop()
 
     def terminate(self):
         self._impl.shutdown()

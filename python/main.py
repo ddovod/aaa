@@ -7,22 +7,19 @@ from gui import Gui
 from context import Context
 from config import Config
 from playsound import playsound
+from webdriver import WebDriver
 
 
 def init_context():
-    config = Config()
-    Context().set_config(config)
-
-    data = config.data()
-    Context().set_data(data)
-    
-    gui = Gui()
-    Context().set_gui(gui)
+    Context().config = Config()
+    Context().data = Context().config.data()
+    Context().gui = Gui()
+    Context().webdriver = WebDriver()
 
 
 def main():
     init_context()
-    gui = Context().gui()
+    gui = Context().gui
     while not gui.should_close():
         gui.update()
     gui.terminate()
