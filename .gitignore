@@ -1,6 +1,5 @@
-./python/__pycache__
-
-./py_venv
-./imgui.ini
-./lot.txt
-./config.json
+python/__pycache__
+py_venv
+imgui.ini
+log.txt
+config.json
