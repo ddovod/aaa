@@ -14,7 +14,7 @@ def get(driver, by, path):
 
 def get_if_visible(driver, by, path):
     bid_buttons = driver.find_elements(By.ID, 'addAuctionBidButton')
-    if len(bid_buttons) == 1:
-        bid_button = bid_buttons[0]
-        if bid_button.is_displayed():
+    # if len(bid_buttons) == 1:
+    #     bid_button = bid_buttons[0]
+    #     if bid_button.is_displayed():
 
