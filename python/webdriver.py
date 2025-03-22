@@ -3,8 +3,10 @@ import time
 import threading
 import copy
 import json
+import sel
 import undetected_chromedriver as uc
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 from log import log
 from context import Context
 
@@ -61,14 +63,50 @@ class WebDriver:
             self._loop_data['lastRefreshTimestamp'] = time.time()
             driver.get(data.trade_url)
 
+        return
+
         current_url = driver.current_url
         if current_url == data.trade_url:
+            # Updating the page by timer
             now_secs = time.time()
             if now_secs - self._loop_data['lastRefreshTimestamp'] >= data.seconds_refresh:
                 log.debug('Refreshing after ' + str(now_secs - self._loop_data['lastRefreshTimestamp']) + ' seconds')
                 self._loop_data['lastRefreshTimestamp'] = now_secs
                 driver.get(data.trade_url)
-            
+
+            # Checking bid button visibility
+            bid_buttons = driver.find_elements(By.ID, 'addAuctionBidButton')
+            if len(bid_buttons) == 1:
+                bid_button = bid_buttons[0]
+                if bid_button.is_displayed():
+                    # Making a bid
+                    # bid_button.click()
+                    time.sleep(2)
+
+                    # Check for error
+                    close_error_buttons = driver.find_elements(By.XPATH, data.close_bid_error_btn_xpath);
+                    if len(close_error_buttons) == 1:
+                        close_error_button = close_error_buttons[0]
+                        if close_error_button.is_displayed():
+                            # Close error popup
+                            close_error_button.click()
+                            time.sleep(1)
+                            
+                    elif len(close_error_buttons) > 1:
+                        log.warning("Several close_bid_error_btn_xpath elements found")
+            elif len(bid_buttons) > 1:
+                log.warning("Several addAuctionBidButton elements found")
+
+                    
+
+                    # var btnEl = document.evaluate(${closeErrorBtnXpath}, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue; return btnEl != null && btnEl.checkVisibility();
+                
+            # if len(driver.find_elements(By.ID, 'addAuctionBidButton')) == 0:
+            # if len(driver.find_elements(By.XPATH, '//*[@id="main-segment"]/div[3]/div/div[1]/div/div[1]/div/button')) == 0:
+            #     log.error('Not found')
+            # else:
+            #     log.error('Found')
+            # log.debug("Post find")
         else:
             # TODO: handle login
             pass
