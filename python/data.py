@@ -58,6 +58,55 @@ class LotData:
         self._seconds_left_min = value
 
 
+class BrowserWindowGeometry:
+    def __init__(self, json_value):
+        self._pos_x = json_value.get('pos_x', -1)
+        self._pos_y = json_value.get('pos_y', -1)
+        self._size_x = json_value.get('size_x', -1)
+        self._size_y = json_value.get('size_y', -1)
+
+    def to_json(self):
+        return {
+            'pos_x': self._pos_x,
+            'pos_y': self._pos_y,
+            'size_x': self._size_x,
+            'size_y': self._size_y
+        }
+
+    @property
+    def pos_x(self):
+        return self._pos_x
+
+    @pos_x.setter
+    def pos_x(self, value):
+        self._pos_x = value
+
+    @property
+    def pos_y(self):
+        return self._pos_y
+
+    @pos_y.setter
+    def pos_y(self, value):
+        self._pos_y = value
+
+    @property
+    def size_x(self):
+        return self._size_x
+
+    @size_x.setter
+    def size_x(self, value):
+        self._size_x = value
+
+    @property
+    def size_y(self):
+        return self._size_y
+
+    @size_y.setter
+    def size_y(self, value):
+        self._size_y = value
+
+
+
 class Data:
     def __init__(self, data_json):
         self._trade_url = data_json.get('trade_url', '')
@@ -65,6 +114,7 @@ class Data:
         self._close_bid_error_btn_xpath = data_json.get('close_bid_error_btn_xpath', '')
         self._seconds_refresh = data_json.get('seconds_refresh', 120)
         self._lots = []
+        self._browser_window_geometry = BrowserWindowGeometry(data_json.get('browser_window_geometry', {}))
         for lot_json in data_json.get('lots', []):
             self._lots.append(LotData(lot_json))
 
@@ -74,7 +124,8 @@ class Data:
             'close_bid_btn_xpath': self._close_bid_btn_xpath,
             'close_bid_error_btn_xpath': self._close_bid_error_btn_xpath,
             'seconds_refresh': self._seconds_refresh,
-            'lots': []
+            'lots': [],
+            'browser_window_geometry': self._browser_window_geometry.to_json()
         }
         for lot in self._lots:
             result['lots'].append(lot.to_json())
@@ -119,6 +170,14 @@ class Data:
     @lots.setter
     def lots(self, value):
         self._lots = value
+
+    @property
+    def browser_window_geometry(self):
+        return self._browser_window_geometry
+
+    @browser_window_geometry.setter
+    def browser_window_geometry(self, value):
+        self._browser_window_geometry = value
 
     def add_new_lot(self):
         self._lots.append(LotData({}))

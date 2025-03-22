@@ -13,8 +13,12 @@ def get(driver, by, path):
     return driver.find_element(by, path)
 
 def get_if_visible(driver, by, path):
-    bid_buttons = driver.find_elements(By.ID, 'addAuctionBidButton')
-    # if len(bid_buttons) == 1:
-    #     bid_button = bid_buttons[0]
-    #     if bid_button.is_displayed():
+    els = driver.find_elements(by, path)
+    if len(els) == 1:
+        el = els[0]
+        if el.is_displayed():
+            return el
+    elif len(els) > 1:
+        log.warning("Several '" + path + "' found")
+    return None
 

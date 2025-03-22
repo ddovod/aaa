@@ -20,8 +20,10 @@ def init_context():
 def main():
     init_context()
     gui = Context().gui
+    driver = Context().webdriver
     while not gui.should_close():
         gui.update()
+        driver.update()
     gui.terminate()
     log.info('Terminating, OK')
 
