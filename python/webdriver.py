@@ -81,7 +81,10 @@ class WebDriver:
         while True:
             time.sleep(1)
 
-            self.run_iter(driver, data);
+            try:
+                self.run_iter(driver, data);
+            except Exception:
+                pass
             self.report_browser_window_geometry(driver)
 
             stop = False
