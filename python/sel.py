@@ -23,11 +23,11 @@ def get_bid_if_exists(driver, by, path):
     try:
         bid_txt = get_if_visible(driver, by, path)
         if bid_txt != None:
-            return int(re.sub("[^0-9]", "", bid_txt.text))
+            return int(re.sub("[^0-9]", "", bid_txt.text)), bid_txt.text
     except Exception:
         pass
 
-    return None
+    return None, None
 
 
 def get_time_seconds_if_exists(driver, by, path):
@@ -38,9 +38,9 @@ def get_time_seconds_if_exists(driver, by, path):
             if hms != None:
                 comps = hms.split(':')
                 if len(comps) == 3:
-                    return int(comps[0]) * 60 * 60 + int(comps[1]) * 60 + int(comps[2])
+                    return int(comps[0]) * 60 * 60 + int(comps[1]) * 60 + int(comps[2]), hms
     except Exception:
         pass
 
-    return None
+    return None, None
 

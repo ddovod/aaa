@@ -8,6 +8,7 @@ from context import Context
 from config import Config
 from playsound import playsound
 from webdriver import WebDriver
+from reporter import Reporter
 
 
 def init_context():
@@ -15,15 +16,19 @@ def init_context():
     Context().data = Context().config.data()
     Context().gui = Gui()
     Context().webdriver = WebDriver()
+    Context().reporter = Reporter()
 
 
 def main():
     init_context()
     gui = Context().gui
     driver = Context().webdriver
+    reporter = Context().reporter
+    reporter.start()
     while not gui.should_close():
         gui.update()
         driver.update()
+    reporter.stop()
     gui.terminate()
     log.info('Terminating, OK')
 

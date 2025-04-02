@@ -37,3 +37,11 @@ class Context:
     @webdriver.setter
     def webdriver(self, webdriver):
         self._webdriver = webdriver
+
+    @property
+    def reporter(self):
+        return self._reporter
+
+    @reporter.setter
+    def reporter(self, reporter):
+        self._reporter = reporter

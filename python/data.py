@@ -109,6 +109,7 @@ class BrowserWindowGeometry:
 
 class Data:
     def __init__(self, data_json):
+        self._tg_bot_url = data_json.get('tg_bot_url', '')
         self._trade_url = data_json.get('trade_url', '')
         self._close_bid_btn_xpath = data_json.get('close_bid_btn_xpath', '')
         self._close_bid_error_btn_xpath = data_json.get('close_bid_error_btn_xpath', '')
@@ -120,6 +121,7 @@ class Data:
 
     def to_json(self):
         result = {
+            'tg_bot_url': self._tg_bot_url,
             'trade_url': self._trade_url,
             'close_bid_btn_xpath': self._close_bid_btn_xpath,
             'close_bid_error_btn_xpath': self._close_bid_error_btn_xpath,
@@ -178,6 +180,14 @@ class Data:
     @browser_window_geometry.setter
     def browser_window_geometry(self, value):
         self._browser_window_geometry = value
+
+    @property
+    def tg_bot_url(self):
+        return self._tg_bot_url
+
+    @tg_bot_url.setter
+    def tg_bot_url(self, value):
+        self._tg_bot_url = value
 
     def add_new_lot(self):
         self._lots.append(LotData({}))
