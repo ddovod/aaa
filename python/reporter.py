@@ -1,5 +1,6 @@
 
 import time
+import copy
 import requests
 import urllib3
 import threading
