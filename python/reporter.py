@@ -13,6 +13,7 @@ class Reporter:
         self._started = False
         self._stop = False
         self._stop_lock = threading.Lock()
+        self._last_report_status_time = 0.0
 
     def start(self):
         if self._started:
@@ -54,6 +55,8 @@ class Reporter:
             status = {
                 "_type": "EMPTY"
             }
-        else:
+            requests.post(data.tg_bot_url, json=status, verify=False)
+        elif 'time' in status and status['time'] > self._last_report_status_time:
+            self._last_report_status_time = status['time']
             status["_type"] = "DATA"
-        requests.post(data.tg_bot_url, json=status, verify=False)
+            requests.post(data.tg_bot_url, json=status, verify=False)

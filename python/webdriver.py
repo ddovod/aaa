@@ -190,7 +190,8 @@ class WebDriver:
                 if len(lot_statuses) == len(data.lots):
                     with self._current_status_lock:
                         self._current_status = {
-                            "lots": lot_statuses
+                            "lots": lot_statuses,
+                            "time": time.time()
                         }
         else:
             # TODO: handle login
