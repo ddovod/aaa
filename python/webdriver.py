@@ -164,6 +164,11 @@ class WebDriver:
                     my_bid, my_bid_txt = sel.get_bid_if_exists(driver, By.XPATH, lot.my_bid_xpath)
                     best_bid, best_bid_txt = sel.get_bid_if_exists(driver, By.XPATH, lot.best_bid_xpath)
                     # log.info(str(time_left) + '  ' + str(my_bid) + '  ' + str(best_bid))
+                    log.info('Fields:')
+                    log.info('time_left = {}, time_left_text = {}'.format(time_left, time_left_text))
+                    log.info('my_bid = {}, my_bid_text = {}'.format(my_bid, my_bid_text))
+                    log.info('best_bid = {}, best_bid_text = {}'.format(best_bid, best_bid_text))
+                    log.info('-----------------------------------------------')
 
                     if time_left_text != None and my_bid_txt != None and best_bid_txt != None:
                         lot_statuses.append({
@@ -172,8 +177,6 @@ class WebDriver:
                             "my_bid": my_bid_txt,
                             "time_left_min_str": self.to_hms_str(lot.seconds_left_min)
                         })
-                    else:
-                        log.error('Some fields are missing: time_left_text = {}, my_bid_txt = {}, best_bid_txt = {}'.format(time_left_text, my_bid_txt, best_bid_txt))
 
                     if time_left != None and my_bid != None and best_bid != None and time_left < lot.seconds_left_min and my_bid < best_bid:
                         open_bid_btn = sel.get_if_visible(driver, By.XPATH, lot.open_bid_btn_xpath)
