@@ -172,6 +172,8 @@ class WebDriver:
                             "my_bid": my_bid_txt,
                             "time_left_min_str": self.to_hms_str(lot.seconds_left_min)
                         })
+                    else:
+                        log.error('Some fields are missing: time_left_text = {}, my_bid_txt = {}, best_bid_txt = {}'.format(time_left_text, my_bid_txt, best_bid_txt))
 
                     if time_left != None and my_bid != None and best_bid != None and time_left < lot.seconds_left_min and my_bid < best_bid:
                         open_bid_btn = sel.get_if_visible(driver, By.XPATH, lot.open_bid_btn_xpath)
