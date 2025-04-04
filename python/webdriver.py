@@ -1,4 +1,5 @@
 
+import traceback
 import time
 import threading
 import copy
@@ -163,12 +164,15 @@ class WebDriver:
                     time_left, time_left_text = sel.get_time_seconds_if_exists(driver, By.XPATH, lot.time_left_xpath)
                     my_bid, my_bid_txt = sel.get_bid_if_exists(driver, By.XPATH, lot.my_bid_xpath)
                     best_bid, best_bid_txt = sel.get_bid_if_exists(driver, By.XPATH, lot.best_bid_xpath)
-                    log.info(str(time_left) + '  ' + str(my_bid) + '  ' + str(best_bid))
-                    log.info('Fields:')
-                    log.info('time_left = {}, time_left_text = {}'.format(time_left, time_left_text))
-                    log.info('my_bid = {}, my_bid_text = {}'.format(my_bid, my_bid_text))
-                    log.info('best_bid = {}, best_bid_text = {}'.format(best_bid, best_bid_text))
-                    log.info('-----------------------------------------------')
+                    try:
+                        log.info("Time: " + str(time_left) + '  ' + str(my_bid) + '  ' + str(best_bid))
+                        log.info('Fields:')
+                        log.info('time_left = {}, time_left_text = {}'.format(time_left, time_left_text))
+                        log.info('my_bid = {}, my_bid_text = {}'.format(my_bid, my_bid_text))
+                        log.info('best_bid = {}, best_bid_text = {}'.format(best_bid, best_bid_text))
+                        log.info('-----------------------------------------------')
+                    except Exception as e:
+                        log.error(traceback.format_exc())
 
                     if time_left_text != None and my_bid_txt != None and best_bid_txt != None:
                         lot_statuses.append({
