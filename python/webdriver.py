@@ -164,12 +164,12 @@ class WebDriver:
                     time_left, time_left_txt = sel.get_time_seconds_if_exists(driver, By.XPATH, lot.time_left_xpath)
                     my_bid, my_bid_txt = sel.get_bid_if_exists(driver, By.XPATH, lot.my_bid_xpath)
                     best_bid, best_bid_txt = sel.get_bid_if_exists(driver, By.XPATH, lot.best_bid_xpath)
-                    log.info("Time: " + str(time_left) + '  ' + str(my_bid) + '  ' + str(best_bid))
-                    log.info('Fields:')
-                    log.info('time_left = {}, time_left_txt = {}'.format(time_left, time_left_txt))
-                    log.info('my_bid = {}, my_bid_txt = {}'.format(my_bid, my_bid_txt))
-                    log.info('best_bid = {}, best_bid_txt = {}'.format(best_bid, best_bid_txt))
-                    log.info('-----------------------------------------------')
+                    # log.info("Time: " + str(time_left) + '  ' + str(my_bid) + '  ' + str(best_bid))
+                    # log.info('Fields:')
+                    # log.info('time_left = {}, time_left_txt = {}'.format(time_left, time_left_txt))
+                    # log.info('my_bid = {}, my_bid_txt = {}'.format(my_bid, my_bid_txt))
+                    # log.info('best_bid = {}, best_bid_txt = {}'.format(best_bid, best_bid_txt))
+                    # log.info('-----------------------------------------------')
 
                     if time_left_txt != None and my_bid_txt != None and best_bid_txt != None:
                         lot_statuses.append({
