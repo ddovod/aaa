@@ -81,8 +81,6 @@ class Gui:
         show, _ = imgui.collapsing_header('Trade config')
         if show:
             _, data.trade_url = imgui.input_text(label='Trades URL', value=data.trade_url)
-            _, data.close_bid_btn_xpath = imgui.input_text(label='"Close bid btn" xpath', value=data.close_bid_btn_xpath)
-            _, data.close_bid_error_btn_xpath = imgui.input_text(label='"Close bid error btn" xpath', value=data.close_bid_error_btn_xpath)
             _, data.seconds_refresh = imgui.input_int(label='Refresh after seconds', value=data.seconds_refresh)
             _, data.tg_bot_url = imgui.input_text(label='TG bot URL', value=data.tg_bot_url)
             imgui.separator()

@@ -186,6 +186,8 @@ class WebDriver:
                             "lots": lot_statuses,
                             "time": time.time()
                         }
+                else:
+                    log.error('len(lot_statuses) != len(data.lots), {} != {}'.format(len(lot_statuses), len(data.lots)))
         else:
             # TODO: handle login
             pass

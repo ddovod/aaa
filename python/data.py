@@ -111,8 +111,6 @@ class Data:
     def __init__(self, data_json):
         self._tg_bot_url = data_json.get('tg_bot_url', '')
         self._trade_url = data_json.get('trade_url', '')
-        self._close_bid_btn_xpath = data_json.get('close_bid_btn_xpath', '')
-        self._close_bid_error_btn_xpath = data_json.get('close_bid_error_btn_xpath', '')
         self._seconds_refresh = data_json.get('seconds_refresh', 120)
         self._lots = []
         self._browser_window_geometry = BrowserWindowGeometry(data_json.get('browser_window_geometry', {}))
@@ -123,8 +121,6 @@ class Data:
         result = {
             'tg_bot_url': self._tg_bot_url,
             'trade_url': self._trade_url,
-            'close_bid_btn_xpath': self._close_bid_btn_xpath,
-            'close_bid_error_btn_xpath': self._close_bid_error_btn_xpath,
             'seconds_refresh': self._seconds_refresh,
             'lots': [],
             'browser_window_geometry': self._browser_window_geometry.to_json()
@@ -140,22 +136,6 @@ class Data:
     @trade_url.setter
     def trade_url(self, value):
         self._trade_url = value
-
-    @property
-    def close_bid_btn_xpath(self):
-        return self._close_bid_btn_xpath
-
-    @close_bid_btn_xpath.setter
-    def close_bid_btn_xpath(self, value):
-        self._close_bid_btn_xpath = value
-
-    @property
-    def close_bid_error_btn_xpath(self):
-        return self._close_bid_error_btn_xpath
-
-    @close_bid_error_btn_xpath.setter
-    def close_bid_error_btn_xpath(self, value):
-        self._close_bid_error_btn_xpath = value
 
     @property
     def seconds_refresh(self):
