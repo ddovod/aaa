@@ -2,8 +2,10 @@
 import time
 import copy
 import requests
+import traceback
 import urllib3
 import threading
+from log import log
 from context import Context
 
 
@@ -40,8 +42,8 @@ class Reporter:
 
             try:
                 self.send_status(data)
-            except Exception:
-                pass
+            except Exception as e:
+                log.error(traceback.format_exc())
 
             stop = False
             with self._stop_lock:
