@@ -142,31 +142,18 @@ class WebDriver:
                 self._loop_data['lastRefreshTimestamp'] = now_secs
                 driver.get(data.trade_url)
 
+            # Refreshing if there's some error popup
+            if sel.get_if_visible(driver, By.ID, 'ui-id-4') is not None:
+                log.info('Error popup is visible, refreshing the page')
+                self._loop_data['lastRefreshTimestamp'] = now_secs
+                driver.get(data.trade_url)
+
             # Checking bid button visibility
             bid_btn = sel.get_if_visible(driver, By.ID, 'addAuctionBidButton')
             if bid_btn != None:
                 # Making a bid
                 bid_btn.click()
                 time.sleep(2)
-
-                # Check for error
-                close_error_btn = sel.get_if_visible(driver, By.XPATH, data.close_bid_error_btn_xpath)
-                if close_error_btn != None:
-                    log.info('Close error button is visible')
-                    # Close error popup
-                    close_error_btn.click()
-                    time.sleep(1)
-
-                    # Close bid popup
-                    close_bid_btn = sel.get_if_visible(driver, By.XPATH, data.close_bid_btn_xpath)
-                    if close_bid_btn != None:
-                        log.info('Close button is visible')
-                        close_bid_btn.click()
-                        time.sleep(1)
-                    else:
-                        log.info('Close button is NOT visible')
-                else:
-                    log.info('Close error button is NOT visible')
             else:
                 lot_statuses = []
                 for lot in data.lots:
