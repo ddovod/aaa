@@ -58,12 +58,12 @@ class Reporter:
             status = {
                 "_type": "EMPTY"
             }
-            status_code = requests.post(data.tg_bot_url, json=status, verify=False).status_code
+            status_code = requests.post(data.tg_bot_url, json=status).status_code
             log.info('POST (EMPTY) response code: ' + str(status_code))
         elif 'time' in status and status['time'] > self._last_report_status_time:
             self._last_report_status_time = status['time']
             status["_type"] = "DATA"
-            status_code = requests.post(data.tg_bot_url, json=status, verify=False).status_code
+            status_code = requests.post(data.tg_bot_url, json=status).status_code
             log.info('POST (DATA) response code: ' + str(status_code))
         else:
             log.info('Status is not updated, skipping')
