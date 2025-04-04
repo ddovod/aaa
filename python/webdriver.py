@@ -111,7 +111,7 @@ class WebDriver:
             try:
                 self.run_iter(driver, data)
             except Exception:
-                pass
+                log.error(traceback.format_exc())
             # self.report_browser_window_geometry_if_needed(driver)
 
             stop = False
