@@ -152,6 +152,7 @@ class WebDriver:
                 # Check for error
                 close_error_btn = sel.get_if_visible(driver, By.XPATH, data.close_bid_error_btn_xpath)
                 if close_error_btn != None:
+                    log.info('Close error button is visible')
                     # Close error popup
                     close_error_btn.click()
                     time.sleep(1)
@@ -159,8 +160,13 @@ class WebDriver:
                     # Close bid popup
                     close_bid_btn = sel.get_if_visible(driver, By.XPATH, data.close_bid_btn_xpath)
                     if close_bid_btn != None:
+                        log.info('Close button is visible')
                         close_bid_btn.click()
                         time.sleep(1)
+                    else:
+                        log.info('Close button is NOT visible')
+                else:
+                    log.info('Close error button is NOT visible')
             else:
                 lot_statuses = []
                 for lot in data.lots:

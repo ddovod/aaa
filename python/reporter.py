@@ -1,4 +1,5 @@
 
+import json
 import time
 import copy
 import requests
@@ -57,8 +58,14 @@ class Reporter:
             status = {
                 "_type": "EMPTY"
             }
-            requests.post(data.tg_bot_url, json=status, verify=False)
+            status_code = requests.post(data.tg_bot_url, json=status, verify=False).status_code
+            log.info('POST (EMPTY) response code: ' + str(status_code))
         elif 'time' in status and status['time'] > self._last_report_status_time:
             self._last_report_status_time = status['time']
             status["_type"] = "DATA"
-            requests.post(data.tg_bot_url, json=status, verify=False)
+            status_code = requests.post(data.tg_bot_url, json=status, verify=False).status_code
+            log.info('POST (DATA) response code: ' + str(status_code))
+        else:
+            log.error('No "time" in status or it is invalid')
+            log.error('Last report status time: ' + self._last_report_status_time)
+            log.error(json.dumps(status, indent=2))
