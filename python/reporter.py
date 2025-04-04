@@ -67,5 +67,5 @@ class Reporter:
             log.info('POST (DATA) response code: ' + str(status_code))
         else:
             log.error('No "time" in status or it is invalid')
-            log.error('Last report status time: ' + self._last_report_status_time)
+            log.error('Last report status time: ' + str(self._last_report_status_time))
             log.error(json.dumps(status, indent=2))
