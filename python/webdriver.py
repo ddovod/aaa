@@ -117,22 +117,29 @@ class WebDriver:
                 self.run_iter(driver, data)
             except Exception as e:
                 if isinstance(e, NoSuchWindowException):
+                    log.error(traceback.format_exc())
                     try:
                         log.info('Trying to recreate the driver (NoSuchWindowException)')
                         driver.quit()
+                        log.info('Quit')
                         time.sleep(3)
                         driver = self.create_driver(data)
+                        log.info('Created')
                         self._loop_data = {}
                     except Exception:
                         log.info('Error recreating the driver')
                         log.error(traceback.format_exc())
                 elif isinstance(e, WebDriverException):
+                    log.error(traceback.format_exc())
                     try:
                         log.info('Trying to recreate the driver (WebDriverException)')
                         driver.close()
+                        log.info('Closed')
                         driver.quit()
+                        log.info('Quit')
                         time.sleep(3)
                         driver = self.create_driver(data)
+                        log.info('Created')
                         self._loop_data = {}
                     except Exception:
                         log.info('Error recreating the driver')
