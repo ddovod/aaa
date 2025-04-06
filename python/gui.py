@@ -86,6 +86,7 @@ class Gui:
             imgui.separator()
 
             imgui.text('Lots')
+            delete_lot_index = None
             for i in range(1, len(data.lots) + 1):
                 if imgui.tree_node('Lot #' + str(i)):
                     lot = data.lots[i - 1]
@@ -94,7 +95,11 @@ class Gui:
                     _, lot.my_bid_xpath = imgui.input_text(label='"My bid" xpath', value=lot.my_bid_xpath)
                     _, lot.open_bid_btn_xpath = imgui.input_text(label='"Open bid btn" xpath', value=lot.open_bid_btn_xpath)
                     _, lot.seconds_left_min = imgui.input_int(label='Min value of seconds left', value=lot.seconds_left_min)
+                    if imgui.button('Delete lot'):
+                        delete_lot_index = i - 1
                     imgui.tree_pop()
+            if delete_lot_index is not None:
+                del data.lots[delete_lot_index]
             if imgui.button('Add new lot'):
                 data.add_new_lot()
             if imgui.button('Save'):

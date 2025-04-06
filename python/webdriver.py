@@ -9,6 +9,7 @@ import events
 import undetected_chromedriver as uc
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import WebDriverException, NoSuchWindowException, ElementClickInterceptedException, StaleElementReferenceException
 from log import log
 from context import Context
 from data import Data
@@ -92,9 +93,7 @@ class WebDriver:
                     Context().data.browser_window_geometry = event.browser_window_geometry
                     Context().config.save()
 
-    def loop(self, data):
-        log.debug('Starting webdriver loop')
-        
+    def create_driver(self, data):
         options = webdriver.ChromeOptions()
         options.debugger_address = '127.0.0.1:54323'
         driver = webdriver.Chrome(options=options)
@@ -104,14 +103,44 @@ class WebDriver:
             driver.set_window_position(geom.pos_x, geom.pos_y)
         if geom.size_x >= 0 and geom.size_y >= 0:
             driver.set_window_size(geom.size_x, geom.size_y)
+        return driver
+
+    def loop(self, data):
+        log.debug('Starting webdriver loop')
+        
+        driver = self.create_driver(data)
 
         while True:
             time.sleep(1)
 
             try:
                 self.run_iter(driver, data)
-            except Exception:
-                log.error(traceback.format_exc())
+            except Exception as e:
+                if isinstance(e, NoSuchWindowException):
+                    try:
+                        log.info('Trying to recreate the driver (NoSuchWindowException)')
+                        driver.quit()
+                        time.sleep(3)
+                        driver = self.create_driver(data)
+                        self._loop_data = {}
+                    except Exception:
+                        log.info('Error recreating the driver')
+                        log.error(traceback.format_exc())
+                elif isinstance(e, WebDriverException):
+                    try:
+                        log.info('Trying to recreate the driver (WebDriverException)')
+                        driver.close()
+                        driver.quit()
+                        time.sleep(3)
+                        driver = self.create_driver(data)
+                        self._loop_data = {}
+                    except Exception:
+                        log.info('Error recreating the driver')
+                        log.error(traceback.format_exc())
+                elif isinstance(e, ElementClickInterceptedException) or isinstance(e, StaleElementReferenceException):
+                    pass
+                else:
+                    log.error(traceback.format_exc())
             # self.report_browser_window_geometry_if_needed(driver)
 
             stop = False
